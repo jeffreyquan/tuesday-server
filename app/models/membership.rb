@@ -1,4 +1,4 @@
-class Team < ApplicationRecord
+class Membership < ApplicationRecord
   belongs_to :user
   belongs_to :project
   has_many :tasks, :through => :projects
