@@ -1,12 +1,22 @@
 class ProjectsController < ApplicationController
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  # NOTE: remove restriction temporarily for testing
+  # before_action :check_for_login, :only => [:show, :create, :update, :destroy]
 
 
-
+  def index
+    @projects = @current_user.projects
+  end
 
   # GET /projects/1.json
   def show
+    # TODO: only show project if it is associated with user
     @project = Project.find params[:id]
     render json: @project, :include => [:team, :tasks]
+  end
+
+  def new
+
   end
 
   # POST /projects.json
@@ -42,7 +52,6 @@ class ProjectsController < ApplicationController
   end
 
   private
-
   def set_project
     @project = Project.find(params[:id])
   end
