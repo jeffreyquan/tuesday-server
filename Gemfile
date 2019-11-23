@@ -20,9 +20,7 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'rack-cors', :require => 'rack/cors'
 
-group :production do
-  gem 'rails_12factor'
-end
+gem 'rails_12factor', group: :production
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
