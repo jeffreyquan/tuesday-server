@@ -5,14 +5,15 @@ class ProjectsController < ApplicationController
 
 
   def index
-    @projects = @current_user.projects
+    @projects = Project.all
+    render json: @projects, :only => [:id, :name, :description], :include => [{:memberships => {:only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => {:user => {:only => [:id, :email, :name, :admin]}}}}]
   end
 
   # GET /projects/1.json
   def show
     # TODO: only show project if it is associated with user
     @project = Project.find params[:id]
-    render json: @project, :include => [:memberships, :tasks]
+    render json: @project, :only => [:id, :name, :description], :include => [{:memberships => {:only => [:id, :project_id, :user_id, :admin, :invitation, :email]}}, {:tasks => {:only => [:name, :status, :due_date, :priority, :owner, :group]}}]
   end
 
   def new

@@ -1,20 +1,17 @@
 class MembershipsController < ApplicationController
   before_action :set_membership, only: [:show, :edit, :update, :destroy]
-  before_action :check_for_login, :only => [:create, :new, :edit, :update, :destroy]
+  # before_action :check_for_login, :only => [:create, :new, :edit, :update, :destroy]
 
   # GET /memberships.json
   def index
-    if @current_user.present? && @current_user.admin === true
-      @memberships = Membership.all
-    else
-      @memberships = Membership.where(:user_id => @current_user.id)
-    end
-    render json: @memberships
+    @memberships = Membership.all
+    render json: @memberships, :only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => [{:user => {:only => [:id, :name, :email, :admin]}}, {:project => {:only => [:id, :name, :description]}}]
   end
 
   # GET /memberships/1.json
   def show
-
+    @membership = Membership.find params[:id]
+    render json: @membership, :only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => [{:user => {:only => [:id, :email, :name, :admin]}}, {:project => {:only => [:id, :name, :description]}}]
   end
 
   # GET /memberships/new
@@ -35,7 +32,7 @@ class MembershipsController < ApplicationController
       if @membership.save
         format.json { render :show, status: :created, location: @membership}
       else
-        format.json { render json: @membership.errors status: :unprocessable_entity }
+        format.json { render json: @membership.errors, status: :unprocessable_entity }
       end
     end
   end
