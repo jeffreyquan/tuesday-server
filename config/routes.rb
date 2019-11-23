@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :projects
   resources :tasks
   resources :memberships
-  resources :users # NOTE: probably don't need all resources for users
+  resources :users, only: [:index, :show, :update, :destroy]
+  # NOTE: probably don't need all resources for users
 
 end
