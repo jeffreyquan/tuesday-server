@@ -12,4 +12,10 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show, :update, :destroy]
   # NOTE: probably don't need all resources for users
 
+  get '/projects/:project_id/tasks/' => 'projects#tasks_index', :as => 'project_tasks'
+  post '/projects/:project_id/tasks/' => 'projects#task_create'
+  get '/projects/:project_id/tasks/:task_id' => 'projects#task_show', :as => 'project_task'
+  post '/projects/:project_id/tasks/:task_id' => 'projects#task_update'
+  delete '/projects/:project_id/tasks/:task_id' => 'projects#task_destroy'
+
 end

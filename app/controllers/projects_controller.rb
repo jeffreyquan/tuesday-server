@@ -50,6 +50,53 @@ class ProjectsController < ApplicationController
     end
   end
 
+  # CUSTOM ACTIONS
+
+  # GET /projects/:project_id/tasks.json
+  def tasks_index
+    @tasks = Task.where(:project_id => params[:project_id])
+    render json: @tasks, :only => [:name, :status, :due_date, :priority, :owner, :group], :include => [{:project => {:only => [:id, :name, :description]}}]
+  end
+
+  # GET /projects/1/tasks/1.json
+  def task_show
+    @task = Task.where(:project_id => params[:project_id], :id => params[:task_id])
+    render json: @task, :only => [:name, :status, :due_date, :priority, :owner, :group], :include => [{:project => {:only => [:id, :name, :description]}}]
+  end
+
+  # POST /projects/:project_id/tasks.json
+  def tasks_create
+    @task = Task.new(task_params)
+    respond_to do |format|
+      if @task.save
+        format.json { render :show, status: :created, location: @task }
+      else
+        format.json { render json: @task.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH/PUT /projects/:project_id/tasks/:task_id
+  def task_update
+    @task = Task.where(:project_id => params[:project_id], :id => params[:task_id])
+    respond_to do |format|
+      if @task.update(task_params)
+        format.json { render :show, status: :ok, location: @task }
+      else
+        format.json { render json: @task.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /projects/:project_id/tasks/:task_id
+  def task_destroy
+    @task = Task.where(:project_id => params[:project_id], :id => params[:task_id])
+    @task.destroy
+    respond_to do |format|
+      format.json { head :no_content }
+    end
+  end
+
   # DELETE /projects/1.json
   def destroy
     @project.destroy
@@ -65,5 +112,9 @@ class ProjectsController < ApplicationController
 
   def project_params
     params.require(:project).permit(:name, :description)
+  end
+
+  def task_params
+    params.require(:task).permit(:name, :status, :due_date, :priorty, :owner, :project_id)
   end
 end
