@@ -76,6 +76,15 @@ class ProjectsController < ApplicationController
     end
   end
 
+  # DELETE /projects/:project_id/groups/:group_id
+  def group_destroy
+    @group = Group.where(:group_id => params[:group_id])
+    @group.destroy
+    respond_to do |format|
+      format.json { head :no_content }
+    end
+  end
+
   # GET /groups/:group_id/tasks.json
   def group_tasks_index
     @tasks = Task.where(:group_id => params[:group_id])

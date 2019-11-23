@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
   get '/projects/:project_id/groups' => 'projects#groups_index', :as => 'project_groups'
   post '/projects/:project_id/groups' => 'projects#group_create'
+  delete '/projects/:project_id/groups/group_id' => 'projects#group_destroy'
   get '/groups/:group_id/tasks/' => 'projects#group_tasks_index', :as => 'project_group_tasks'
   post '/groups/:group_id/tasks/' => 'projects#group_task_create'
   get '/groups/:group_id/tasks/:task_id' => 'projects#group_task_show', :as => 'project_group_task'
