@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
   # NOTE: remove restriction temporarily for testing
   # before_action :check_for_login, :only => [:show, :create, :update, :destroy]
 
-
+  # GET /projects.json
   def index
     @projects = Project.all
     render json: @projects, :only => [:id, :name, :description], :include => [{:memberships => {:only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => {:user => {:only => [:id, :email, :name, :admin]}}}}]
@@ -18,12 +18,10 @@ class ProjectsController < ApplicationController
 
   # GET /projects/new
   def new
-
   end
 
   # GET /projects/1/edit
   def edit
-
   end
 
   # POST /projects.json
@@ -50,22 +48,48 @@ class ProjectsController < ApplicationController
     end
   end
 
+  # DELETE /projects/1.json
+  def destroy
+    @project.destroy
+    respond_to do |format|
+      format.json { head :no_content }
+    end
+  end
+
   # CUSTOM ACTIONS
 
-  # GET /projects/:project_id/tasks.json
-  def tasks_index
-    @tasks = Task.where(:project_id => params[:project_id])
-    render json: @tasks, :only => [:name, :status, :due_date, :priority, :owner, :group], :include => [{:project => {:only => [:id, :name, :description]}}]
+  # GET /projects/:project_id/groups.json
+  def groups_index
+    @groups = Group.where(:project_id => params[:project_id])
+    render json: @groups, :only => [:id, :name, :project_id], :include => [{:project => {:only => [:id, :name, :description]}}], :include => [{:tasks => {:only => [:id, :name, :status, :due_date, :priority, :owner, :group_id]}}]
   end
 
-  # GET /projects/1/tasks/1.json
-  def task_show
-    @task = Task.where(:project_id => params[:project_id], :id => params[:task_id])
-    render json: @task, :only => [:name, :status, :due_date, :priority, :owner, :group], :include => [{:project => {:only => [:id, :name, :description]}}]
+  # POST /projects/:project_id/groups.json
+  def group_create
+    @group = Group.new(group_params)
+    respond_to do |format|
+      if @group.save
+        format.json { render :show, status: :created, location: @group }
+      else
+        format.json { render json: @group.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
-  # POST /projects/:project_id/tasks.json
-  def tasks_create
+  # GET /groups/:group_id/tasks.json
+  def group_tasks_index
+    @tasks = Task.where(:group_id => params[:group_id])
+    render json: @tasks, :only => [:id, :name, :status, :due_date, :priority, :owner, :group_id], :include => [{:group => {:only => [:id, :name],:include => [{:project => {:only => [:id, :name, :description]}}]}}]
+  end
+
+  # GET /groups/:group_id/tasks/:task_id
+  def group_task_show
+    @task = Task.where(:group_id => params[:group_id], :id => params[:task_id])
+    render json: @task, :only => [:id, :name, :status, :due_date, :priority, :owner, :group_id], :include => [{:group => {:only => [:id, :name],:include => [{:project => {:only => [:id, :name, :description]}}]}}]
+  end
+
+  # POST /groups/:group_id/tasks.json
+  def group_task_create
     @task = Task.new(task_params)
     respond_to do |format|
       if @task.save
@@ -76,9 +100,9 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /projects/:project_id/tasks/:task_id
-  def task_update
-    @task = Task.where(:project_id => params[:project_id], :id => params[:task_id])
+  # PATCH/PUT /groups/:group_id/tasks/:task_id
+  def group_task_update
+    @task = Task.where(:group_id => params[:group_id], :id => params[:task_id])
     respond_to do |format|
       if @task.update(task_params)
         format.json { render :show, status: :ok, location: @task }
@@ -89,17 +113,9 @@ class ProjectsController < ApplicationController
   end
 
   # DELETE /projects/:project_id/tasks/:task_id
-  def task_destroy
-    @task = Task.where(:project_id => params[:project_id], :id => params[:task_id])
+  def group_task_destroy
+    @task = Task.where(:group_id => params[:group_id], :id => params[:task_id])
     @task.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
-  end
-
-  # DELETE /projects/1.json
-  def destroy
-    @project.destroy
     respond_to do |format|
       format.json { head :no_content }
     end
@@ -114,7 +130,11 @@ class ProjectsController < ApplicationController
     params.require(:project).permit(:name, :description)
   end
 
+  def group_params
+    params.require(:group).permit(:name, :project_id)
+  end
+
   def task_params
-    params.require(:task).permit(:name, :status, :due_date, :priorty, :owner, :project_id)
+    params.require(:task).permit(:name, :status, :due_date, :priorty, :owner, :group_id)
   end
 end

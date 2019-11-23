@@ -6,25 +6,24 @@ class TasksController < ApplicationController
   # GET /tasks.json
   def index
     @tasks = Task.all
-    render json: @tasks, :only => [:name, :status, :due_date, :priority, :owner, :group], :include => [{:project => {:only => [:id, :name, :description]}}]
+    render json: @tasks, :only => [:id, :name, :status, :due_date, :priority, :owner, :group_id], :include => [{:group => {:only => [:id, :name], :include => [{:project => {:only => [:id, :name, :description]}}]}}]
   end
 
   # GET /tasks/1.json
   def show
     @task = Task.find params[:id]
-    render json: @task, :only => [:name, :status, :due_date, :priority, :owner, :group], :include => [{:project => {:only => [:id, :name, :description]}}]
+    render json: @task, :only => [:id, :name, :status, :due_date, :priority, :owner, :group_id], :include => [{:group => {:only => [:id, :name], :include => [{:project => {:only => [:id, :name, :description]}}]}}]
   end
 
   # GET /tasks/new
   def new
-
   end
 
   # GET /tasks/1/edit
   def edit
-
   end
 
+  # POST /tasks.json
   def create
     @task = Task.new(task_params)
 
@@ -62,7 +61,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :status, :due_date, :priorty, :owner, :project_id)
+    params.require(:task).permit(:name, :status, :due_date, :priorty, :owner, :group_id)
   end
-
 end
