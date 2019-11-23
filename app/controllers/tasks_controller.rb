@@ -1,16 +1,18 @@
 class TasksController < ApplicationController
-  before_action :set_task, :only => [:show, :edit, :update, :destroy]
+  before_action :set_task, :only => [:show, :edit]
   # before_action :check_for_login, :only =>
   # before_action :check_for_admin, :only => [:index]
 
   # GET /tasks.json
   def index
-    @tasks = Task.all
+    # Note: this is an action directed from /groups/:group_id/tasks.json
+    @tasks = Task.where[:group_id => params[:group_id]]
     render json: @tasks, :only => [:id, :name, :status, :due_date, :priority, :owner, :group_id], :include => [{:group => {:only => [:id, :name], :include => [{:project => {:only => [:id, :name, :description]}}]}}]
   end
 
   # GET /tasks/1.json
   def show
+    # Note: this is a redirect from /groups/:group_id/tasks/:task_id
     @task = Task.find params[:id]
     render json: @task, :only => [:id, :name, :status, :due_date, :priority, :owner, :group_id], :include => [{:group => {:only => [:id, :name], :include => [{:project => {:only => [:id, :name, :description]}}]}}]
   end
@@ -25,6 +27,7 @@ class TasksController < ApplicationController
 
   # POST /tasks.json
   def create
+    # Note: this is a redirect from /groups/:group_id/tasks.json
     @task = Task.new(task_params)
 
     respond_to do |format|
@@ -38,6 +41,8 @@ class TasksController < ApplicationController
 
   # PATCH/PUT /tasks/1.json
   def update
+    # Note: this is a redirect from /groups/:group_id/tasks/:task_id
+    @task = Task.where(:group_id => params[:group_id], :id => params[:task_id])
     respond_to do |format|
       if @task.update(task_params)
         format.json { render :show, status: :ok, location: @task}
@@ -49,6 +54,8 @@ class TasksController < ApplicationController
 
   # DELETE /tasks/1.json
   def destroy
+    # Note: this is a redirect from /projects/:project_id/tasks/:task_id
+    @task = Task.where(:group_id => params[:group_id], :id => params[:task_id])
     @task.destroy
     respond_to do |format|
       format.json { head :no_content }

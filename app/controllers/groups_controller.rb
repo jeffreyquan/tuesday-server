@@ -1,9 +1,11 @@
 class GroupsController < ApplicationController
-  before_action :set_group, :only => [:show, :edit, :update, :destroy]
+  before_action :set_group, :only => [:show, :edit]
 
   # GET /groups.json
   def index
-    @groups = Group.all
+    # Note: this is a redirect to this action from the route /projects/:project_id/groups.json
+    # can change @groups depending on whether the user is admin or not
+    @groups = Group.where(:project_id => params[:project_id])
     render json: @groups, :only => [:id, :name, :project_id], :include => [{:project => {:only => [:id, :name, :description]}}], :include => [{:tasks => {:only => [:id, :name, :status, :due_date, :priority, :owner, :group_id]}}]
   end
 
@@ -36,6 +38,7 @@ class GroupsController < ApplicationController
 
   # PATCH/PUT /groups/1.json
   def update
+    @group = Group.where(:project_id => params[:project_id])
     respond_to do |format|
       if @group.update(group_params)
         format.json { render :show, status: :ok, location: @group }
@@ -47,6 +50,8 @@ class GroupsController < ApplicationController
 
   # DELETE /groups/1.json
   def destroy
+    # Note this action is directed from /projects/:project_id/groups/:group_id
+    @group = Group.where(:group_id => params[:group_id])
     @group.destroy
     respond_to do |format|
       format.json { head :no_content }
