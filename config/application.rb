@@ -1,3 +1,6 @@
+config.middleware.use ActionDispatch::Cookies
+
+
 require_relative 'boot'
 
 require "rails"
