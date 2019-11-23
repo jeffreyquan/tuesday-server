@@ -16,7 +16,13 @@ class ProjectsController < ApplicationController
     render json: @project, :only => [:id, :name, :description], :include => [{:memberships => {:only => [:id, :project_id, :user_id, :admin, :invitation, :email]}}, {:tasks => {:only => [:name, :status, :due_date, :priority, :owner, :group]}}]
   end
 
+  # GET /projects/new
   def new
+
+  end
+
+  # GET /projects/1/edit
+  def edit
 
   end
 
