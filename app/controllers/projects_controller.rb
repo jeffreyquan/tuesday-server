@@ -12,7 +12,7 @@ class ProjectsController < ApplicationController
   def show
     # TODO: only show project if it is associated with user
     @project = Project.find params[:id]
-    render json: @project, :include => [:team, :tasks]
+    render json: @project, :include => [:memberships, :tasks]
   end
 
   def new

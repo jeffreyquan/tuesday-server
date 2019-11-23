@@ -1,13 +1,12 @@
 class TasksController < ApplicationController
+  before_action :check_for_login, :only =>
+  before_action :check_for_admin, :only => [:index]
 
-
-  # TODO: limit tasks to only those belonging to 
   def index
     @tasks = Task.all
   end
 
   def show
-
   end
 
   def new
