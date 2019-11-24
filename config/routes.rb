@@ -16,20 +16,15 @@ Rails.application.routes.draw do
 
   # https://guides.rubyonrails.org/routing.html#nested-resources
   resources :projects do
-    resources :groups, only: [:index, :create, :update, :destroy]
+    resources :groups, only: [:index, :show, :create, :update, :destroy]
   end
 
   resources :groups do
-    resources :task, only: [:index, :create, :show, :update, :destroy]
+    resources :tasks, only: [:index, :create, :show, :update, :destroy]
   end
 
-  # get '/projects/:project_id/groups' => 'projects#groups_index', :as => 'project_groups'
-  # post '/projects/:project_id/groups' => 'projects#group_create'
-  # delete '/projects/:project_id/groups/group_id' => 'projects#group_destroy'
-  get '/groups/:group_id/tasks/' => 'projects#group_tasks_index', :as => 'project_group_tasks'
-  post '/groups/:group_id/tasks/' => 'projects#group_task_create'
-  get '/groups/:group_id/tasks/:task_id' => 'projects#group_task_show', :as => 'project_group_task'
-  post '/groups/:group_id/tasks/:task_id' => 'projects#group_task_update'
-  delete '/groups/:group_id/tasks/:task_id' => 'projects#group_task_destroy'
+  resources :users do
+    resources :memberships, only: [:index, :create, :show, :update, :destroy]
+  end
 
 end
