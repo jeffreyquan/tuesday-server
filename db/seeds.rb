@@ -23,33 +23,47 @@ m6 = Membership.create :admin => false, :invitation => true, :email => "shaneen@
 puts "#{ Membership.count } memberships created."
 
 Task.destroy_all
-t1 = Task.create :name => "create project plan", :status => "Done", :due_date => "2019-11-25", :priority => "High", :owner => "Jeffrey", :group => "Done"
-t2 = Task.create :name => "draft program", :status => "Done", :due_date => "2019-11-24", :priority => "Medium", :owner => "Jeffrey", :group => "Done"
-t3 = Task.create :name => "contact event agent", :status => "Working On It", :due_date => "2019-11-27", :priority => "High", :owner => "Jeffrey", :group => "external consultants"
-t4 = Task.create :name => "organise venue", :status => "Stuck", :due_date => "2019-11-30", :priority => "High", :owner => "Jeffrey", :group => "external consultants"
-t5 = Task.create :name => "create flyers to hand out", :status => "Done", :due_date => "2019-11-17", :priority => "Low", :owner => "Jeffrey", :group => "Done"
-t6 = Task.create :name => "create project plan", :status => "Done", :due_date => "2019-11-25", :priority => "High", :owner => "Jeffrey", :group => "Done"
-t7 = Task.create :name => "arrange for finances", :status => "Stuck", :due_date => "2019-11-25", :priority => "High", :owner => "Jeffrey", :group => "Help me"
-t8 = Task.create :name => "organise animals", :status => "Working On It", :due_date => "2019-12-12", :priority => "High", :owner => "Jeffrey", :group => "Help me"
+t1 = Task.create :name => "create project plan", :status => "Done", :due_date => "2019-11-25", :priority => "High", :owner => "Jeffrey"
+t2 = Task.create :name => "draft program", :status => "Done", :due_date => "2019-11-24", :priority => "Medium", :owner => "Jeffrey"
+t3 = Task.create :name => "contact event agent", :status => "Working On It", :due_date => "2019-11-27", :priority => "High", :owner => "Jeffrey"
+t4 = Task.create :name => "organise venue", :status => "Stuck", :due_date => "2019-11-30", :priority => "High", :owner => "Jeffrey"
+t5 = Task.create :name => "create flyers to hand out", :status => "Done", :due_date => "2019-11-17", :priority => "Low", :owner => "Jeffrey"
+t6 = Task.create :name => "create project plan", :status => "Done", :due_date => "2019-11-25", :priority => "High", :owner => "Jeffrey"
+t7 = Task.create :name => "arrange for finances", :status => "Stuck", :due_date => "2019-11-25", :priority => "High", :owner => "Jeffrey"
+t8 = Task.create :name => "organise animals", :status => "Working On It", :due_date => "2019-12-12", :priority => "High", :owner => "Jeffrey"
 
-t9 = Task.create :name => "create project plan", :status => "Done", :due_date => "2019-11-25", :priority => "High", :owner => "Jeffrey", :group => "Done"
-t10 = Task.create :name => "draft program", :status => "Done", :due_date => "2019-11-24", :priority => "Medium", :owner => "Jeffrey", :group => "Done"
-t11 = Task.create :name => "contact event agent", :status => "Working On It", :due_date => "2019-11-27", :priority => "High", :owner => "Jeffrey", :group => "external consultants"
-t12 = Task.create :name => "organise venue", :status => "Stuck", :due_date => "2019-11-30", :priority => "High", :owner => "Jeffrey", :group => "external consultants"
-t13 = Task.create :name => "create flyers to hand out", :status => "Done", :due_date => "2019-11-17", :priority => "Low", :owner => "Jeffrey", :group => "Done"
-t14 = Task.create :name => "create project plan", :status => "Done", :due_date => "2019-11-25", :priority => "High", :owner => "Jeffrey", :group => "Done"
-t15 = Task.create :name => "arrange for finances", :status => "Stuck", :due_date => "2019-11-25", :priority => "High", :owner => "Jeffrey", :group => "Help me"
-t16 = Task.create :name => "organise animals", :status => "Working On It", :due_date => "2019-12-12", :priority => "High", :owner => "Jeffrey", :group => "Help me"
+t9 = Task.create :name => "create project plan", :status => "Done", :due_date => "2019-11-25", :priority => "High", :owner => "Jin"
+t10 = Task.create :name => "draft program", :status => "Done", :due_date => "2019-11-24", :priority => "Medium", :owner => "Jin"
+t11 = Task.create :name => "contact event agent", :status => "Working On It", :due_date => "2019-11-27", :priority => "High", :owner => "Jin"
+t12 = Task.create :name => "organise venue", :status => "Stuck", :due_date => "2019-11-30", :priority => "High", :owner => "Jin"
+t13 = Task.create :name => "create flyers to hand out", :status => "Done", :due_date => "2019-11-17", :priority => "Low", :owner => "Jin"
+t14 = Task.create :name => "create project plan", :status => "Done", :due_date => "2019-11-25", :priority => "High", :owner => "Jin"
+t15 = Task.create :name => "arrange for finances", :status => "Stuck", :due_date => "2019-11-25", :priority => "High", :owner => "Jin"
+t16 = Task.create :name => "organise animals", :status => "Working On It", :due_date => "2019-12-12", :priority => "High", :owner => "Jin"
 
-t17 = Task.create :name => "create project plan", :status => "Done", :due_date => "2019-11-25", :priority => "High", :owner => "Jeffrey", :group => "Done"
-t18 = Task.create :name => "draft program", :status => "Done", :due_date => "2019-11-24", :priority => "Medium", :owner => "Jeffrey", :group => "Done"
-t19 = Task.create :name => "contact event agent", :status => "Working On It", :due_date => "2019-11-27", :priority => "High", :owner => "Jeffrey", :group => "external consultants"
-t20 = Task.create :name => "organise venue", :status => "Stuck", :due_date => "2019-11-30", :priority => "High", :owner => "Jeffrey", :group => "external consultants"
-t21 = Task.create :name => "create flyers to hand out", :status => "Done", :due_date => "2019-11-17", :priority => "Low", :owner => "Jeffrey", :group => "Done"
-t22 = Task.create :name => "create project plan", :status => "Done", :due_date => "2019-11-25", :priority => "High", :owner => "Jeffrey", :group => "Done"
-t23 = Task.create :name => "arrange for finances", :status => "Stuck", :due_date => "2019-11-25", :priority => "High", :owner => "Jeffrey", :group => "Help me"
-t24 = Task.create :name => "organise animals", :status => "Working On It", :due_date => "2019-12-12", :priority => "High", :owner => "Jeffrey", :group => "Help me"
+t17 = Task.create :name => "create project plan", :status => "Done", :due_date => "2019-11-25", :priority => "High", :owner => "Shaneen"
+t18 = Task.create :name => "draft program", :status => "Done", :due_date => "2019-11-24", :priority => "Medium", :owner => "Shaneen"
+t19 = Task.create :name => "contact event agent", :status => "Working On It", :due_date => "2019-11-27", :priority => "High", :owner => "Shaneen"
+t20 = Task.create :name => "organise venue", :status => "Stuck", :due_date => "2019-11-30", :priority => "High", :owner => "Shaneen"
+t21 = Task.create :name => "create flyers to hand out", :status => "Done", :due_date => "2019-11-17", :priority => "Low", :owner => "Shaneen"
+t22 = Task.create :name => "create project plan", :status => "Done", :due_date => "2019-11-25", :priority => "High", :owner => "Shaneen"
+t23 = Task.create :name => "arrange for finances", :status => "Stuck", :due_date => "2019-11-25", :priority => "High", :owner => "Shaneen"
+t24 = Task.create :name => "organise animals", :status => "Working On It", :due_date => "2019-12-12", :priority => "High", :owner => "Shaneen"
 puts "#{ Task.count } tasks created."
+
+Group.destroy_all
+g1 = Group.create :name => "Todo"
+g2 = Group.create :name => "Done"
+g3 = Group.create :name => "Todo"
+g4 = Group.create :name => "Done"
+g5 = Group.create :name => "Todo"
+g6 = Group.create :name => "Done"
+puts "#{ Group.count } groups created."
+
+p1.groups << g1 << g2
+p2.groups << g3 << g4
+p3.groups << g5 << g6
+puts "Projects and Groups."
 
 p1.memberships << m1 << m2
 p2.memberships << m3 << m4
@@ -61,7 +75,10 @@ u2.memberships << m1 << m6
 u3.memberships << m2 << m4
 puts "Users and Memberships."
 
-p1.tasks << t1 << t2 << t3 << t4 << t5 << t6 << t7 << t8
-p2.tasks << t9 << t10 << t11 << t12 << t13 << t14 << t15 << t16
-p3.tasks << t17 << t18 << t19 << t20 << t21 << t22 << t23 << t24
-puts "Projects and Tasks."
+g1.tasks << t1 << t2 << t3
+g2.tasks << t4 << t5 << t6 << t7 << t8
+g3.tasks << t9 << t10 << t11 << t12
+g4.tasks << t13 << t14 << t15 << t16
+g5.tasks << t17 << t18
+g6.tasks << t19 << t20 << t21 << t22 << t23 << t24
+puts "Groups and Tasks."

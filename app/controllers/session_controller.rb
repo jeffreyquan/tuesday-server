@@ -1,18 +1,22 @@
 class SessionController < ApplicationController
   def create
-    user = User
-            .find_by(email: params['user']['email'])
-            .try(:authenticate, params['user']['password'])
-
-    if user
+    user = User.find_by :email => params['user']['email']
+    if user.present?  && user.authenticate(params['user']['password'])
       session[:user_id] = user.id
+      created_jwt = JWT.encode({id: user.id}, "mys3cr3t", "HS256")
+      cookies.signed[:jwt] = {
+        value: created_jwt,
+        httponly:true,
+        expires: 1.hour.from_now
+      }
       render json: {
         status: :created,
         logged_in: true,
         user: user
       }
     else
-      render json: { status: 401 }
+      render json: { status: 401,
+      params: params}
     end
   end
 
@@ -29,8 +33,14 @@ class SessionController < ApplicationController
   end
 
   def logout
-    reset_session
-    render json: {status: 200, logged_out: true}
+    session[:user_id] = nil
+    cookies.delete(:jwt)
+    render json: {
+      status: 200,
+      session: session,
+      logged_out: true
+    }
   end
+
 
 end

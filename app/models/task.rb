@@ -1,3 +1,3 @@
 class Task < ApplicationRecord
-  belongs_to :project, :optional => true
+  belongs_to :group, :optional => true
 end
