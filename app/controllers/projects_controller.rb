@@ -57,83 +57,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # CUSTOM ACTIONS
-
-  # NOT REQUIRED AT THE MOMENT - SEE GROUPS CONTROLLER
-  # GET /projects/:project_id/groups.json
-  # def groups_index
-  #   @groups = Group.where(:project_id => params[:project_id])
-  #   render json: @groups, :only => [:id, :name, :project_id], :include => [{:project => {:only => [:id, :name, :description]}}], :include => [{:tasks => {:only => [:id, :name, :status, :due_date, :priority, :owner, :group_id]}}]
-  # end
-
-  # POST /projects/:project_id/groups.json
-  # def group_create
-  #   @group = Group.new(group_params)
-  #
-  #   respond_to do |format|
-  #     if @group.save
-  #       format.json { render :show, status: :created, location: @group }
-  #     else
-  #       format.json { render json: @group.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-
-  # DELETE /projects/:project_id/groups/:group_id
-  # def group_destroy
-  #   @group = Group.where(:group_id => params[:group_id])
-  #   @group.destroy
-  #   respond_to do |format|
-  #     format.json { head :no_content }
-  #   end
-  # end
-
-  # GET /groups/:group_id/tasks.json
-  # def group_tasks_index
-  #   @tasks = Task.where(:group_id => params[:group_id])
-  #   render json: @tasks, :only => [:id, :name, :status, :due_date, :priority, :owner, :group_id], :include => [{:group => {:only => [:id, :name],:include => [{:project => {:only => [:id, :name, :description]}}]}}]
-  # end
-
-  # GET /groups/:group_id/tasks/:task_id
-  # def group_task_show
-  #   @task = Task.where(:group_id => params[:group_id], :id => params[:task_id])
-  #   render json: @task, :only => [:id, :name, :status, :due_date, :priority, :owner, :group_id], :include => [{:group => {:only => [:id, :name],:include => [{:project => {:only => [:id, :name, :description]}}]}}]
-  # end
-
-  # POST /groups/:group_id/tasks.json
-  # def group_task_create
-  #   @task = Task.new(task_params)
-  #
-  #   respond_to do |format|
-  #     if @task.save
-  #       format.json { render :show, status: :created, location: @task }
-  #     else
-  #       format.json { render json: @task.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-
-  # PATCH/PUT /groups/:group_id/tasks/:task_id
-  # def group_task_update
-  #   @task = Task.where(:group_id => params[:group_id], :id => params[:task_id])
-  #   respond_to do |format|
-  #     if @task.update(task_params)
-  #       format.json { render :show, status: :ok, location: @task }
-  #     else
-  #       format.json { render json: @task.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-
-  # DELETE /projects/:project_id/tasks/:task_id
-  # def group_task_destroy
-  #   @task = Task.where(:group_id => params[:group_id], :id => params[:task_id])
-  #   @task.destroy
-  #   respond_to do |format|
-  #     format.json { head :no_content }
-  #   end
-  # end
-
   private
   def set_project
     @project = Project.find(params[:id])
@@ -141,13 +64,5 @@ class ProjectsController < ApplicationController
 
   def project_params
     params.require(:project).permit(:name, :description)
-  end
-
-  def group_params
-    params.require(:group).permit(:name, :project_id)
-  end
-
-  def task_params
-    params.require(:task).permit(:name, :status, :due_date, :priorty, :owner, :group_id)
   end
 end
