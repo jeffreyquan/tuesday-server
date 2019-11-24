@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   # NOTE: remove restriction temporarily for testing
   # before_action :check_for_login, :only => [:show, :create, :update, :destroy]
-  before_action :authenticate_user
+  # before_action :authenticate_user
 
   # GET /projects.json
   def index

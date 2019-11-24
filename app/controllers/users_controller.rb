@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, :only => [:show, :edit, :update, :destroy]
   # before_action :check_for_login, :only => [:show]
   # before_action :check_for_admin, :only => [:index]
-  before_action :authenticate_user, only: [:show]
+  # before_action :authenticate_user, only: [:show]
 
   # GET /user.json
   def index

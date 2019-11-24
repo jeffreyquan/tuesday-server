@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   # https://guides.rubyonrails.org/routing.html#nested-resources
   resources :projects do
-    resources :groups, only: [:index, :create, :update, :destroy]
+    resources :groups, only: [:index, :show, :create, :update, :destroy]
   end
 
   resources :groups do
@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   end
 
   resources :users do
-    resources :memberships, only: [:index, :create, :show, :destroy]
+    resources :memberships, only: [:index, :create, :show, :update, :destroy]
   end
 
 end

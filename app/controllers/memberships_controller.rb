@@ -4,8 +4,8 @@ class MembershipsController < ApplicationController
 
   # GET /memberships.json
   def index
-    if @current_user.present?
-      @memberships = Membership.where(:user_id => @current_user.id)
+    if params[:user_id].present?
+      @memberships = Membership.where(:user_id => params[:user_id])
     else
       @memberships = Membership.all
     end
