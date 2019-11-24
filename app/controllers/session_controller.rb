@@ -3,16 +3,16 @@ class SessionController < ApplicationController
     user = User.find_by :email => params['user']['email']
     if user.present?  && user.authenticate(params['user']['password'])
       session[:user_id] = user.id
-      created_jwt = JWT.encode({id: user.id}, "mys3cr3t", "HS256")
+      created_jwt = JWT.encode({id: user.id}, "mys3cr3t")
       cookies.signed[:jwt] = {
         value: created_jwt,
-        httponly:true,
         expires: 1.hour.from_now
       }
       render json: {
         status: :created,
         logged_in: true,
-        user: user
+        user: user,
+        jwt: created_jwt
       }
     else
       render json: { status: 401,

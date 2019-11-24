@@ -3,9 +3,9 @@ class ApplicationController < ActionController::Base
   include ::ActionController::Cookies
 
   def authenticate_user
-    puts 'runs'
-    jwt = cookies.signed[:jwt]
+    jwt = headers
     decoded_token = JWT.decode(jwt, "mys3cr3t", true, {algorithm: 'HS256'})
     puts decoded_token
   end
+
 end

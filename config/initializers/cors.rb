@@ -4,6 +4,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     origins 'http://localhost:3333'
     resource '*',
       :headers => :any,
+      :expose => ["jwt"],
       :methods => %i( get post put patch delete options head ),
       :credentials => true
   end
@@ -12,6 +13,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     origins 'https://client-tuesday.markfranco.now.sh/'
     resource '*',
       :headers => :any,
+      :expose => ["jwt"],
       :methods => %i( get post put patch delete options head ),
       :credentials => true
   end
