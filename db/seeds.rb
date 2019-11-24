@@ -12,14 +12,17 @@ p3 = Project.create :name => "Project 2 - Shaneen", :description => "Phone Conta
 puts "#{ Project.count } projects created."
 
 Membership.destroy_all
-m1 = Membership.create :admin => false, :invitation => true, :email => "jin@ga.co"
-m2 = Membership.create :admin => false, :invitation => false, :email => "shaneen@ga.co"
+m1 = Membership.create :admin => true, :invitation => true, :email => "jeffrey@ga.co"
+m2 = Membership.create :admin => false, :invitation => true, :email => "jin@ga.co"
+m3 = Membership.create :admin => false, :invitation => false, :email => "shaneen@ga.co"
 
-m3 = Membership.create :admin => false, :invitation => false, :email => "jeffrey@ga.co"
-m4 = Membership.create :admin => true, :invitation => false, :email => "jin@ga.co"
+m4 = Membership.create :admin => false, :invitation => false, :email => "jeffrey@ga.co"
+m5 = Membership.create :admin => true, :invitation => true, :email => "jin@ga.co"
+m6 = Membership.create :admin => true, :invitation => true, :email => "shaneen@ga.co"
 
-m5 = Membership.create :admin => false, :invitation => false, :email => "jeffrey@ga.co"
-m6 = Membership.create :admin => false, :invitation => true, :email => "shaneen@ga.co"
+m7 = Membership.create :admin => false, :invitation => false, :email => "jeffrey@ga.co"
+m8 = Membership.create :admin => true, :invitation => true, :email => "shaneen@ga.co"
+m9 = Membership.create :admin => false, :invitation => true, :email => "jin@ga.co"
 puts "#{ Membership.count } memberships created."
 
 Task.destroy_all
@@ -65,14 +68,14 @@ p2.groups << g3 << g4
 p3.groups << g5 << g6
 puts "Projects and Groups."
 
-p1.memberships << m1 << m2
-p2.memberships << m3 << m4
-p3.memberships << m5 << m6
+p1.memberships << m1 << m2 << m3
+p2.memberships << m4 << m5 << m6
+p3.memberships << m7 << m8 << m9
 puts "Projects and Memberships."
 
-u1.memberships << m3 << m5
-u2.memberships << m1 << m6
-u3.memberships << m2 << m4
+u1.memberships << m1 << m4 << m7
+u2.memberships << m2 << m5 << m9
+u3.memberships << m3 << m6 << m8
 puts "Users and Memberships."
 
 g1.tasks << t1 << t2 << t3
