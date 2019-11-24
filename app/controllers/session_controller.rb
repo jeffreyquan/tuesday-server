@@ -1,9 +1,11 @@
 class SessionController < ApplicationController
+
+
   def create
     user = User.find_by :email => params['user']['email']
     if user.present?  && user.authenticate(params['user']['password'])
       session[:user_id] = user.id
-      created_jwt = JWT.encode({id: user.id}, "mys3cr3t")
+      created_jwt = JWT.encode({id: user.id}, "mys3cr3t", "HS256")
       cookies.signed[:jwt] = {
         value: created_jwt,
         expires: 1.hour.from_now
