@@ -50,10 +50,8 @@ class MembershipsController < ApplicationController
 
   # DELETE /memberships/1.json
   def destroy
-    
-    @membership.destroy
 
-  end
+    @membership.destroy
 
   end
 

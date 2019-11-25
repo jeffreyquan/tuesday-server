@@ -52,7 +52,7 @@ class TasksController < ApplicationController
   def update
     # Note: also action for /groups/:group_id/tasks/:id
     if @task.update(task_params)
-      render @task
+      render json: @task
     else
       render json: @task.errors
     end
@@ -71,6 +71,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :status, :due_date, :priorty, :owner, :group_id)
+    params.require(:task).permit(:name, :status, :due_date, :priority, :owner, :group_id)
   end
 end
