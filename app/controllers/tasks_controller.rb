@@ -41,25 +41,20 @@ class TasksController < ApplicationController
   def create
     # Note: also action for /groups/:group_id/tasks.json
     @task = Task.new(task_params)
-
-    respond_to do |format|
-      if @task.save
-        format.json { render :show, status: :created, location: @task }
-      else
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+    if @task.save
+      render json: @task
+    else
+      render json: @task.errors
     end
   end
 
   # PATCH/PUT /tasks/1.json
   def update
     # Note: also action for /groups/:group_id/tasks/:id
-    respond_to do |format|
-      if @task.update(task_params)
-        format.json { render :show, status: :ok, location: @task}
-      else
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+    if @task.update(task_params)
+      render @task
+    else
+      render json: @task.errors
     end
   end
 
@@ -67,9 +62,7 @@ class TasksController < ApplicationController
   def destroy
     # Note: also action for /projects/:project_id/tasks/:id
     @task.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+
   end
 
   private

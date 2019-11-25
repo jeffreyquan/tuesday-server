@@ -32,24 +32,19 @@ class GroupsController < ApplicationController
   # POST /groups.json
   def create
     @group = Group.new(group_params)
-
-    respond_to do |format|
-      if @group.save
-        format.json { render :show, status: :created, location: @group }
-      else
-        format.json { render json: @group.errors, status: :unprocessable_entity }
-      end
+    if @group.save
+      render json: @group
+    else
+      render json: @group.errors
     end
   end
 
   # PATCH/PUT /groups/1.json
   def update
-    respond_to do |format|
-      if @group.update(group_params)
-        format.json { render :show, status: :ok, location: @group }
-      else
-        format.json { render json: @group.errors, status: :unprocessable_entity }
-      end
+    if @group.update(group_params)
+      render json: @group
+    else
+      render json: @group.errors
     end
   end
 
@@ -57,9 +52,7 @@ class GroupsController < ApplicationController
   def destroy
     # Note this action is directed from /projects/:project_id/groups/:id
     @group.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+
   end
 
   private

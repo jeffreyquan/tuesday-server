@@ -32,32 +32,27 @@ class MembershipsController < ApplicationController
   # POST /memberships.json
   def create
     @membership = Membership.new(membership_params)
-
-    respond_to do |format|
-      if @membership.save
-        format.json { render :show, status: :created, location: @membership}
-      else
-        format.json { render json: @membership.errors, status: :unprocessable_entity }
-      end
+    if @membership.save
+      render json: @membership
+    else
+      render json: @membership.errors
     end
   end
 
   # PATCH/PUT /memberships/1.json
   def update
-    respond_to do |format|
-      if @membership.update(membership_params)
-        format.json { render :show, status: :ok, location: @membership}
-      else
-        format.json { render json: @membership.errors, status: :unprocessable_entity }
-      end
+    if @membership.update(membership_params)
+      render json: @membership
+    else
+      render json: @membership.errors
+    end
   end
 
   # DELETE /memberships/1.json
   def destroy
+    
     @membership.destroy
-    respond_to do |format|
-      format.json { head :no_content}
-    end
+
   end
 
   end

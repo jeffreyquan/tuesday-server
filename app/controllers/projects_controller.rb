@@ -28,33 +28,27 @@ class ProjectsController < ApplicationController
   # POST /projects.json
   def create
     @project = Project.new(project_params)
-
-    respond_to do |format|
-      if @project.save
-        format.json { render :show, status: :created, location: @project }
-      else
-        format.json { render json: @project.errors, status: :unprocessable_entity }
-      end
+    if @project.save
+      render json: @project
+    else
+      render json: @project.errors
     end
   end
 
   # PATCH/PUT /projects/1.json
   def update
-    respond_to do |format|
-      if @project.update(project_params)
-        format.json { render :show, status: :ok, location: @project }
-      else
-        format.json { render json: @project.errors, status: :unprocessable_entity }
-      end
+    if @project.update(project_params)
+      render json: @project
+    else
+      render json: @project.errors
     end
   end
 
   # DELETE /projects/1.json
   def destroy
+    
     @project.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+
   end
 
   private
