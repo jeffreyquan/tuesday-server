@@ -4,13 +4,13 @@ class UsersController < ApplicationController
   # before_action :check_for_admin, :only => [:index]
   # before_action :authenticate_user, only: [:show]
 
-  # GET /user.json
+  # GET /users.json
   def index
     @users = User.all
     render json: @users, :except => [:password_digest, :created_at, :updated_at]
   end
 
-  # GET /user/1.json
+  # GET /users/1.json
   def show
     @user = User.find params[:id]
     render json: @user, :only=> [:id, :email, :name, :admin], :include => [{:memberships => {:only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => {:project => {:only => [:id, :name, :description]}}}}]
