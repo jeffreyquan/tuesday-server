@@ -14,7 +14,7 @@ class ProjectsController < ApplicationController
   def show
     # TODO: only show project if it is associated with user
     @project = Project.find params[:id]
-    render json: @project, :only => [:id, :name, :description], :include => [{:memberships => {:only => [:id, :project_id, :user_id, :admin, :invitation, :email]}}], :include => [{:groups => {:only => [:id, :name, :project_id], :include => {:tasks => {:only => [:name, :status, :due_date, :priority, :owner]}}}}]
+    render json: @project, :only => [:id, :name, :description], :include => [{:memberships => {:only => [:id, :project_id, :user_id, :admin, :invitation, :email]}}], :include => [{:groups => {:only => [:id, :name, :project_id], :include => {:tasks => {:only => [:id, :name, :status, :due_date, :priority, :owner]}}}}]
   end
 
   # GET /projects/new
@@ -46,7 +46,7 @@ class ProjectsController < ApplicationController
 
   # DELETE /projects/1.json
   def destroy
-    
+
     @project.destroy
 
   end
