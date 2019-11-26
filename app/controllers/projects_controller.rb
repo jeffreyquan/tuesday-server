@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   # NOTE: remove restriction temporarily for testing
   # before_action :check_for_login, :only => [:show, :create, :update, :destroy]
-  # before_action :authenticate_user
+  before_action :get_token
 
   # GET /projects.json
   def index
@@ -28,8 +28,18 @@ class ProjectsController < ApplicationController
   # POST /projects.json
   def create
     @project = Project.new(project_params)
+    user_id = @token[0]["id"].to_i
+    puts user_id
+    user = User.where(:id => user_id)
     if @project.save
-      render json: @project
+      membership = Membership.new
+      membership.project_id = @project.id
+      membership.user_id = user_id
+      membership.admin = true
+      membership.invitation = true
+      membership.email = user[0].email
+      @project.memberships << membership
+      render json: @project, :only => [:id, :name, :description], :include => [{:memberships => {:only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => {:project => {:only => [:id, :name, :description]}}}}]
     else
       render json: @project.errors
     end
@@ -52,11 +62,15 @@ class ProjectsController < ApplicationController
   end
 
   private
+  def get_token
+    @token = authenticate_user()
+  end
+
   def set_project
     @project = Project.find(params[:id])
   end
 
   def project_params
-    params.require(:project).permit(:name, :description)
+    params.require(:project).permit(:name, :description, :memberships => [], :groups => [])
   end
 end
