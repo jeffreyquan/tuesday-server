@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   # NOTE: remove restriction temporarily for testing
   # before_action :check_for_login, :only => [:show, :create, :update, :destroy]
-  before_action :get_token
+  before_action :get_token, only: [:create]
 
   # GET /projects.json
   def index
@@ -14,7 +14,7 @@ class ProjectsController < ApplicationController
   def show
     # TODO: only show project if it is associated with user
     @project = Project.find params[:id]
-    render json: @project, :only => [:id, :name, :description], :include => [{:memberships => {:only => [:id, :project_id, :user_id, :admin, :invitation, :email]}}], :include => [{:groups => {:only => [:id, :name, :project_id], :include => {:tasks => {:only => [:id, :name, :status, :due_date, :priority, :owner]}}}}]
+    render json: @project, :only => [:id, :name, :description], :include => [{:memberships => {:only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => {:user => {:only => [:name]}}}}, {:groups => {:only => [:id, :name, :project_id], :include => {:tasks => {:only => [:id, :name, :status, :due_date, :priority, :owner]}}}}]
   end
 
   # GET /projects/new
@@ -39,7 +39,7 @@ class ProjectsController < ApplicationController
       membership.invitation = true
       membership.email = user[0].email
       @project.memberships << membership
-      render json: @project, :only => [:id, :name, :description], :include => [{:memberships => {:only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => {:project => {:only => [:id, :name, :description]}}}}]
+      render json: @project, :only => [:id, :name, :description], :include => [{:memberships => {:only => [:id, :project_id, :user_id, :admin, :invitation, :email]}}]
     else
       render json: @project.errors
     end

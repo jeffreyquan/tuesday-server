@@ -30,9 +30,23 @@ class MembershipsController < ApplicationController
 
   # POST /memberships.json
   def create
-    @membership = Membership.new(membership_params)
+    admin = membership_params["admin"]
+    puts admin
+    invitation = membership_params["invitation"]
+    puts invitation
+    project_id = membership_params["project_id"]
+    puts project_id
+    email = membership_params["email"]
+    puts email
+    user = User.where(:email => email)
+    if user.present?
+      user_id = user[0].id
+    end
+    puts user_id
+    @membership = Membership.create :admin => admin, :invitation => invitation, :project_id => project_id, :email => email, :user_id => user_id
+
     if @membership.save
-      render json: @membership
+      render json: @membership, :only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => {:user => {:only => [:name]}}
     else
       render json: @membership.errors
     end
@@ -41,7 +55,7 @@ class MembershipsController < ApplicationController
   # PATCH/PUT /memberships/1.json
   def update
     if @membership.update(membership_params)
-      render json: @membership
+      render json: @membership, :only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => [{:user => {:only => [:name]}}]
     else
       render json: @membership.errors
     end

@@ -3,12 +3,15 @@ User.destroy_all
 u1 = User.create :name => "Jeffrey", :email => "jeffrey@ga.co", :admin => true, :password_digest => BCrypt::Password.create('chicken')
 u2 = User.create :name => "Jin", :email => "jin@ga.co", :admin => false, :password_digest => BCrypt::Password.create('chicken')
 u3 = User.create :name => "Shaneen", :email => "shaneen@ga.co", :admin => false, :password_digest => BCrypt::Password.create('chicken')
+u4 = User.create :name => "Ben", :email => "ben@ga.co", :admin => false, :password_digest => BCrypt::Password.create('chicken')
+u5 = User.create :name => "John", :email => "david@ga.co", :admin => false, :password_digest => BCrypt::Password.create('chicken')
+u6 = User.create :name => "David", :email => "david@ga.co", :admin => false, :password_digest => BCrypt::Password.create('chicken')
 puts "#{ User.count } users created."
 
 Project.destroy_all
-p1 = Project.create :name => "Project 0 - Jeffrey", :description => "reverse petting zoo"
-p2 = Project.create :name => "Project 1 - Jin", :description => "Wallstreet Hub Web App"
-p3 = Project.create :name => "Project 2 - Shaneen", :description => "Phone Contacts App"
+p1 = Project.create :name => "Reverse Petting Zoo", :description => "Event planning for a petting zoo"
+p2 = Project.create :name => "Wallstreet Hub", :description => "Web app to display stocks and create watchlists"
+p3 = Project.create :name => "Creative Contacts App", :description => "Web app to store all contacts into custom groups"
 puts "#{ Project.count } projects created."
 
 Membership.destroy_all
