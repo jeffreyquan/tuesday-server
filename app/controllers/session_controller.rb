@@ -5,10 +5,6 @@ class SessionController < ApplicationController
     if user.present?  && user.authenticate(params['user']['password'])
       session[:user_id] = user.id
       created_jwt = JWT.encode({id: user.id}, "mys3cr3t", "HS256")
-      cookies.signed[:jwt] = {
-        value: created_jwt,
-        expires: 1.hour.from_now
-      }
       render json: {
         status: :created,
         logged_in: true,
@@ -35,7 +31,6 @@ class SessionController < ApplicationController
 
   def logout
     session[:user_id] = nil
-    cookies.delete(:jwt)
     render json: {
       status: 200,
       session: session,
