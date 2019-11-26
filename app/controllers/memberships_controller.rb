@@ -4,20 +4,11 @@ class MembershipsController < ApplicationController
 
   # GET /memberships.json
   def index
-    # filtering out memberships by email
-    if @current_user.present?
-      puts "user present"
-      @memberships = Membership.where(:email => @current_user.email)
+    if params[:user_id].present?
+      @memberships = Membership.where(:user_id => params[:user_id])
     else
-      puts "no user"
+      @memberships = Membership.all
     end
-
-    # if params[:user_id].present?
-    #   @memberships = Membership.where(:user_id => params[:user_id])
-    # else
-    #   @memberships = Membership.all
-    # end
-
     render json: @memberships, :only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => [{:user => {:only => [:id, :name, :email, :admin]}}, {:project => {:only => [:id, :name, :description]}}]
   end
 
