@@ -38,11 +38,20 @@ class MembershipsController < ApplicationController
     puts project_id
     email = membership_params["email"]
     puts email
+    # @users = User.all
+    # emails = []
+    # @users.each do |user|
+    #   emails << user.email
+    # end
     user = User.where(:email => email)
     if user.present?
       user_id = user[0].id
+    else
+      render json: { message: 'Bad request'}, status: :unprocessable_entity
+      return
     end
     puts user_id
+
     @membership = Membership.create :admin => admin, :invitation => invitation, :project_id => project_id, :email => email, :user_id => user_id
 
     if @membership.save
