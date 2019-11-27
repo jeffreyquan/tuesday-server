@@ -1,7 +1,5 @@
 class UsersController < ApplicationController
   before_action :set_user, :only => [:show, :edit, :update, :destroy]
-  # before_action :check_for_login, :only => [:show]
-  # before_action :check_for_admin, :only => [:index]
   # before_action :authenticate_user, only: [:show]
 
   # GET /users.json
@@ -20,15 +18,13 @@ class UsersController < ApplicationController
   # def create
   # end
 
-
+  # Not implementing update of user
   def update
-
   end
 
   def destroy
-
     @user.destroy
-
+    head :no_content
   end
 
   private

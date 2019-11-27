@@ -1,7 +1,5 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
-  # NOTE: remove restriction temporarily for testing
-  # before_action :check_for_login, :only => [:show, :create, :update, :destroy]
   before_action :get_token, only: [:create]
 
   # GET /projects.json
@@ -12,21 +10,14 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1.json
   def show
-    # TODO: only show project if it is associated with user
     @project = Project.find params[:id]
     render json: @project, :only => [:id, :name, :description], :include => [{:memberships => {:only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => {:user => {:only => [:name]}}}}, {:groups => {:only => [:id, :name, :project_id], :include => {:tasks => {:only => [:id, :name, :status, :due_date, :priority, :owner]}}}}]
   end
 
-  # GET /projects/new
-  def new
-  end
-
-  # GET /projects/1/edit
-  def edit
-  end
-
   # POST /projects.json
   def create
+    # Project is created in the Control panel which is unique to each user
+    # Creating a project automatically creates an association with the user through a membership
     @project = Project.new(project_params)
     user_id = @token[0]["id"].to_i
     puts user_id
@@ -41,24 +32,23 @@ class ProjectsController < ApplicationController
       @project.memberships << membership
       render json: @project, :only => [:id, :name, :description], :include => [{:memberships => {:only => [:id, :project_id, :user_id, :admin, :invitation, :email]}}]
     else
-      render json: @project.errors
+      render json: @project.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /projects/1.json
   def update
     if @project.update(project_params)
-      render json: @project
+      render json: @project, :only => [:id, :name, :description], :include => [{:memberships => {:only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => {:user => {:only => [:name]}}}}, {:groups => {:only => [:id, :name, :project_id], :include => {:tasks => {:only => [:id, :name, :status, :due_date, :priority, :owner]}}}}]
     else
-      render json: @project.errors
+      render json: @project.errors, status: :unprocessable_entity
     end
   end
 
   # DELETE /projects/1.json
   def destroy
-
     @project.destroy
-
+    head :no_content
   end
 
   private
