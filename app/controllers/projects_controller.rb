@@ -5,13 +5,13 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     @projects = Project.all
-    render json: @projects, :only => [:id, :name, :description], :include => [{:memberships => {:only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => {:user => {:only => [:id, :email, :name, :admin]}}}}]
+    render json: @projects, :except => [:created_at, :updated_at], :include => [{:memberships => {:except => [:created_at, :updated_at], :include => {:user => {:except => [:created_at, :updated_at, :password_digest]}}}}]
   end
 
   # GET /projects/1.json
   def show
     @project = Project.find params[:id]
-    render json: @project, :only => [:id, :name, :description], :include => [{:memberships => {:only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => {:user => {:only => [:name]}}}}, {:groups => {:only => [:id, :name, :project_id], :include => {:tasks => {:only => [:id, :name, :status, :due_date, :priority, :owner]}}}}]
+    render json: @project, :except => [:created_at, :updated_at], :include => [{:memberships => {:except => [:created_at, :updated_at], :include => {:user => {:only => [:name]}}}}, {:groups => {:except => [:created_at, :updated_at], :include => {:tasks => {:except => [:created_at, :updated_at]}}}}]
   end
 
   # POST /projects.json
@@ -70,7 +70,7 @@ class ProjectsController < ApplicationController
 
       g2.tasks << t4 << t5
 
-      render json: @project, :only => [:id, :name, :description], :include => [{:memberships => {:only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => [{:project => {:only => [:id, :name, :description]}}]}}]
+      render json: @project, :except => [:created_at, :updated_at], :include => [{:memberships => {:except => [:created_at, :updated_at], :include => [{:project => {:except => [:created_at, :updated_at]}}]}}]
     else
       render json: @project.errors, status: :unprocessable_entity
     end
@@ -79,7 +79,7 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1.json
   def update
     if @project.update(project_params)
-      render json: @project, :only => [:id, :name, :description], :include => [{:memberships => {:only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => {:user => {:only => [:name]}}}}, {:groups => {:only => [:id, :name, :project_id], :include => {:tasks => {:only => [:id, :name, :status, :due_date, :priority, :owner]}}}}]
+      render json: @project, :except => [:created_at, :updated_at], :include => [{:memberships => {:except => [:created_at, :updated_at], :include => {:user => {:only => [:name]}}}}, {:groups => {:except => [:created_at, :updated_at], :include => {:tasks => {except => [:created_at, :updated_at]}}}}]
     else
       render json: @project.errors, status: :unprocessable_entity
     end

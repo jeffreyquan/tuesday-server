@@ -1,6 +1,6 @@
 class MembershipsController < ApplicationController
   before_action :set_membership, only: [:show, :edit, :update, :destroy]
-  
+
   # GET /memberships.json
   def index
     # Note: this action is also directed from /users/user_id/memberships
@@ -9,13 +9,13 @@ class MembershipsController < ApplicationController
     else
       @memberships = Membership.all
     end
-    render json: @memberships, :only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => [{:user => {:only => [:id, :name, :email, :admin]}}, {:project => {:only => [:id, :name, :description]}}]
+    render json: @memberships, :except => [:created_at, :updated_at], :include => [{:user => {:except => [:created_at, :updated_at, :password_digest]}}, {:project => {:except => [:created_at, :updated_at]}}]
   end
 
   # GET /memberships/1.json
   def show
     @membership = Membership.find params[:id]
-    render json: @membership, :only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => [{:user => {:only => [:id, :email, :name, :admin]}}, {:project => {:only => [:id, :name, :description]}}]
+    render json: @membership, :except => [:created_at, :updated_at], :include => [{:user => {:except => [:created_at, :updated_at, :password_digest]}}, {:project => {:except => [:created_at, :updated_at]}}]
   end
 
   # POST /memberships.json
@@ -51,7 +51,7 @@ class MembershipsController < ApplicationController
     @membership = Membership.create :admin => admin, :invitation => invitation, :project_id => project_id, :email => email, :user_id => user_id
 
     if @membership.save
-      render json: @membership, :only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => {:user => {:only => [:name]}}
+      render json: @membership, :except => [:created_at, :updated_at], :include => {:user => {:only => [:name]}}
     else
       render json: @membership.errors, status: :unprocessable_entity
     end
@@ -60,7 +60,7 @@ class MembershipsController < ApplicationController
   # PATCH/PUT /memberships/1.json
   def update
     if @membership.update(membership_params)
-      render json: @membership, :only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => [{:user => {:only => [:name]}}]
+      render json: @membership, :except => [:created_at, :updated_at], :include => [{:user => {:only => [:name]}}]
     else
       render json: @membership.errors, status: :unprocessable_entity
     end

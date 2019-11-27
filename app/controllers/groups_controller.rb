@@ -10,20 +10,20 @@ class GroupsController < ApplicationController
       @groups = Group.all
     end
 
-    render json: @groups, :only => [:id, :name, :project_id], :include => [{:project => {:only => [:id, :name, :description]}}, {:tasks => {:only => [:id, :name, :status, :due_date, :priority, :owner, :group_id]}}]
+    render json: @groups, :except => [:created_at, :updated_at], :include => [{:project => {:except => [:created_at, :updated_at]}}, {:tasks => {:except => [:created_at, :updated_at]}}]
   end
 
   # GET /groups/1.json
   def show
     @group = Group.find params[:id]
-    render json: @group, :only => [:id, :name, :project_id], :include => [{:project => {:only => [:id, :name, :description]}}, {:tasks => {:only => [:id, :name, :status, :due_date, :priority, :owner, :group_id]}}]
+    render json: @group, :except => [:created_at, :updated_at], :include => [{:project => {:except => [:created_at, :updated_at]}}, {:tasks => {:except => [:created_at, :updated_at]}}]
   end
 
   # POST /groups.json
   def create
     @group = Group.new(group_params)
     if @group.save
-      render json: @group, :only => [:id, :name, :project_id], :include => [{:project => {:only => [:id, :name, :description]}}]
+      render json: @group, :except => [:created_at, :updated_at], :include => [{:project => {:except => [:created_at, :updated_at]}}]
     else
       render json: @group.errors, status: :unprocessable_entity
     end
@@ -32,7 +32,7 @@ class GroupsController < ApplicationController
   # PATCH/PUT /groups/1.json
   def update
     if @group.update(group_params)
-      render json: @group, :only => [:id, :name, :project_id], :include => [{:project => {:only => [:id, :name, :description]}}]
+      render json: @group, :except => [:created_at, :updated_at], :include => [{:project => {:except => [:created_at, :updated_at]}}]
     else
       render json: @group.errors, status: :unprocessable_entity
     end

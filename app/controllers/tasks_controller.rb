@@ -11,7 +11,7 @@ class TasksController < ApplicationController
       @tasks = Task.all
     end
 
-    render json: @tasks, :only => [:id, :name, :status, :due_date, :priority, :owner, :group_id], :include => [{:group => {:only => [:id, :name], :include => [{:project => {:only => [:id, :name, :description]}}]}}]
+    render json: @tasks, :except => [:created_at, :updated_at], :include => [{:group => {:only => [:id, :name], :include => [{:project => {:except => [:created_at, :updated_at]}}]}}]
   end
 
   # GET /tasks/1.json
@@ -23,7 +23,7 @@ class TasksController < ApplicationController
       @task = Task.find params[:id]
     end
 
-    render json: @task, :only => [:id, :name, :status, :due_date, :priority, :owner, :group_id], :include => [{:group => {:only => [:id, :name], :include => [{:project => {:only => [:id, :name, :description]}}]}}]
+    render json: @task, :except => [:created_at, :updated_at], :include => [{:group => {:except => [:created_at, :updated_at], :include => [{:project => {:except => [:created_at, :updated_at]}}]}}]
   end
 
   # POST /tasks.json
@@ -31,7 +31,7 @@ class TasksController < ApplicationController
     # Note: also directed from /groups/:group_id/tasks.json
     @task = Task.new(task_params)
     if @task.save
-      render json: @task, :only => [:id, :name, :status, :due_date, :priority, :owner, :group_id], :include => [{:group => {:only => [:id, :name], :include => [{:project => {:only => [:id, :name, :description]}}]}}]
+      render json: @task, :except => [:created_at, :updated_at], :include => [{:group => {:except => [:created_at, :updated_at], :include => [{:project => {:except => [:created_at, :updated_at]}}]}}]
     else
       render json: @task.errors, status: :unprocessable_entity
     end
@@ -41,7 +41,7 @@ class TasksController < ApplicationController
   def update
     # Note: also directed from /groups/:group_id/tasks/:id
     if @task.update(task_params)
-      render json: @task, :only => [:id, :name, :status, :due_date, :priority, :owner, :group_id], :include => [{:group => {:only => [:id, :name], :include => [{:project => {:only => [:id, :name, :description]}}]}}]
+      render json: @task, :except => [:created_at, :updated_at], :include => [{:group => {:except => [:created_at, :updated_at], :include => [{:project => {:except => [:created_at, :updated_at]}}]}}]
     else
       render json: @task.errors, status: :unprocessable_entity
     end

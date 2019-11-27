@@ -5,13 +5,13 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
-    render json: @users, :only => [:id, :email, :name, :admin], :include => [{:memberships => {:only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => [{:project => {:only => [:id, :name, :description]}}]}}]
+    render json: @users, :except => [:created_at, :updated_at, :password_digest], :include => [{:memberships => {:except => [:created_at, :updated_at]}}]
   end
 
   # GET /users/1.json
   def show
     @user = User.find params[:id]
-    render json: @user, :only => [:id, :email, :name, :admin], :include => [{:memberships => {:only => [:id, :project_id, :user_id, :admin, :invitation, :email], :include => [{:project => {:only => [:id, :name, :description]}}]}}]
+    render json: @user, :except => [:created_at, :updated_at, :password_digest], :include => [{:memberships => {:except => [:created_at, :updated_at]}}]
   end
 
   # NOTE: registration controller taking care of user creation
