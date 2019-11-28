@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find params[:id]
-    render json: @user, :except => [:created_at, :updated_at, :password_digest], :include => [{:memberships => {:except => [:created_at, :updated_at]}}]
+    render json: @user, :except => [:created_at, :updated_at, :password_digest], :include => [{:memberships => {:except => [:created_at, :updated_at], :include => {:project => {:except => [:created_at, :updated_at]}}}}]
   end
 
   # NOTE: registration controller taking care of user creation
