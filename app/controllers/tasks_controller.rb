@@ -3,7 +3,7 @@ class TasksController < ApplicationController
 
   # GET /tasks.json
   def index
-    # Note: this is also a direct to this action from /groups/:group_id/tasks.json
+    # Note: also a direct to this action from /groups/:group_id/tasks.json
     if params[:group_id].present?
       @tasks = Task.where(:group_id => params[:group_id])
     else
