@@ -10,7 +10,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   end
 
   allow do
-    origins 'https://client-tuesday-qdk2fbus7.now.sh/'
+    origins 'https://client-tuesday.1183958.now.sh'
     resource '*',
       :headers => :any,
       :expose => ["jwt"],
