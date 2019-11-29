@@ -42,15 +42,18 @@ class ProjectsController < ApplicationController
       t1.owner = user.name
       t1.status = "Working On It"
       t1.priority = "Medium"
+      t1.due_date = "2019-11-30"
       t1.save
 
       t2 = Task.new
       t2.name = "Item 2"
       t2.status = "Done"
+      t2.due_date = "2019-11-30"
       t2.save
 
       t3 = Task.new
       t3.name = "Item 3"
+      t3.due_date = "2019-11-30"
       t3.save
 
       g1.tasks << t1 << t2 << t3
@@ -62,10 +65,12 @@ class ProjectsController < ApplicationController
 
       t4 = Task.new
       t4.name = "Item 4"
+      t4.due_date = "2019-11-30"
       t4.save
 
       t5 = Task.new
       t5.name = "Item 5"
+      t5.due_date = "2019-11-30"
       t5.save
 
       g2.tasks << t4 << t5
