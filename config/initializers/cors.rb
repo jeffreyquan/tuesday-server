@@ -18,4 +18,13 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
       :credentials => true
   end
 
+    allow do
+      origins 'https://jeffreyquan.github.io/tuesday-client/'
+      resource '*',
+        :headers => :any,
+        :expose => ["jwt"],
+        :methods => %i( get post put patch delete options head ),
+        :credentials => true
+    end
+
 end
