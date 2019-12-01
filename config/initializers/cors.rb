@@ -19,7 +19,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   end
 
   allow do
-    origins 'https://jeffreyquan.github.io'
+    origins 'https://jeffreyquan.github.io/tuesday-client/#/'
     resource '*',
       :headers => :any,
       :expose => ["jwt"],
