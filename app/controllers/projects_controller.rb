@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :get_token, only: [:create]
-
+  
   # GET /projects.json
   def index
     @projects = Project.all

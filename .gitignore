@@ -3,3 +3,5 @@
 
 #ignor tmp files
 /tmp/*
+
+node_modules/

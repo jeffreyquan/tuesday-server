@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_task, :only => [:show, :edit, :update, :destroy]
-
+  
   # GET /tasks.json
   def index
     # Note: also a direct to this action from /groups/:group_id/tasks.json

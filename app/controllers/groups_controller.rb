@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   before_action :set_group, :only => [:show, :edit, :update, :destroy]
-
+  
   # GET /groups.json
   def index
     # Note: direct to this action from the route /projects/:project_id/groups.json

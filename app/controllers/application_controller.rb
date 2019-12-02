@@ -3,9 +3,10 @@ class ApplicationController < ActionController::Base
   include ::ActionController::Cookies
   before_action :authenticate_user
 
+  private
   def bearer_token
     pattern = /^Bearer /
-    header  = request.headers['Authorization']
+    header = request.headers['Authorization']
     header.gsub(pattern, '') if header && header.match(pattern)
   end
 
